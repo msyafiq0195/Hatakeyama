@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="hatakeyama_module" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="PI3K_recreation.cellml">
+        <component component_ref="PI3K" name="PI3K"/>
+    </import>
+    <import xlink:href="RAS_recreation.cellml">
+        <component component_ref="RasGDPtoRasGTP" name="RasGDPtoRasGTP"/>
+    </import>
+    <import xlink:href="RAF_recreation.cellml">
+        <component component_ref="RAF" name="RAF"/>
+    </import>
+    <import xlink:href="Akt_recreation.cellml">
+        <component component_ref="Akt" name="Akt"/>
+    </import>
+    <import xlink:href="MEK_recreation.cellml">
+        <component component_ref="MEK" name="MEK"/>
+    </import>
+    <import xlink:href="ERK_recreation.cellml">
+        <component component_ref="ERK" name="ERK"/>
+    </import>
+    <units name="s">
+        <unit units="second"/>
+    </units>
+    <units name="nm">
+        <unit prefix="nano" units="mole"/>
+        <unit exponent="-1" units="litre"/>
+    </units>
+    <units name="flux">
+        <unit units="nm"/>
+        <unit exponent="-1" units="s"/>
+    </units>
+    <units name="second_order_rate_constant">
+        <unit exponent="-1" units="nm"/>
+        <unit exponent="-1" units="s"/>
+    </units>
+    <units name="first_order_rate_constant">
+        <unit exponent="-1" units="s"/>
+    </units>
+    <component name="HRG_value">
+        <variable name="HRG" public_interface="in" units="nM"/>
+    </component>
+    <group>
+        <relationship_ref relationship="encapsulation"/>
+        <component_ref component="environment">
+            <component_ref component="PI3K"/>
+            <component_ref component="RasGDPtoRasGTP"/>
+            <component_ref component="RAF"/>
+            <component_ref component="Akt"/>
+            <component_ref component="MEK"/>
+            <component_ref component="ERK"/>
+            <component_ref component="HRG_value"/>
+        </component_ref>
+    </group>
+    <component name="environment">
+        <variable name="time" public_interface="out" units="s"/>
+    </component>
+    <connection>
+        <map_components component_1="PI3K" component_2="HRG_value"/>
+        <map_variables variable_1="HRG" variable_2="HRG"/>
+    </connection>
+    <connection>
+        <map_components component_1="PI3K" component_2="environment"/>
+        <map_variables variable_1="time" variable_2="time"/>
+    </connection>
+    <connection>
+        <map_components component_1="Akt" component_2="environment"/>
+        <map_variables variable_1="time" variable_2="time"/>
+    </connection>
+    <connection>
+        <map_components component_1="RAF" component_2="environment"/>
+        <map_variables variable_1="time" variable_2="time"/>
+    </connection>
+    <connection>
+        <map_components component_1="RasGDPtoRasGTP" component_2="environment"/>
+        <map_variables variable_1="time" variable_2="time"/>
+    </connection>
+    <connection>
+        <map_components component_1="MEK" component_2="environment"/>
+        <map_variables variable_1="time" variable_2="time"/>
+    </connection>
+    <connection>
+        <map_components component_1="ERK" component_2="environment"/>
+        <map_variables variable_1="time" variable_2="time"/>
+    </connection>
+    <connection>
+        <map_components component_1="PI3K" component_2="RasGDPtoRasGTP"/>
+        <map_variables variable_1="ShGS" variable_2="ShGS"/>
+    </connection>
+    <connection>
+        <map_components component_1="RasGDPtoRasGTP" component_2="RAF"/>
+        <map_variables variable_1="RasGTP" variable_2="RasGTP"/>
+    </connection>
+    <connection>
+        <map_components component_1="RAF" component_2="Akt"/>
+        <map_variables variable_1="Akt_PIPP" variable_2="Akt_PIPP"/>
+    </connection>
+    <connection>
+        <map_components component_1="Akt" component_2="MEK"/>
+        <map_variables variable_1="MEKP" variable_2="MEKP"/>
+        <map_variables variable_1="MEKPP" variable_2="MEKPP"/>
+        <map_variables variable_1="Akt_PIP" variable_2="Akt_PIP"/>
+        <map_variables variable_1="Akt_PIPP" variable_2="Akt_PIPP"/>
+    </connection>
+    <connection>
+        <map_components component_1="ERK" component_2="MEK"/>
+        <map_variables variable_1="MEKPP" variable_2="MEKPP"/>
+    </connection>
+    <connection>
+        <map_components component_1="RAF" component_2="MEK"/>
+        <map_variables variable_1="RAF_star" variable_2="RAF_star"/>
+    </connection>
+    <connection>
+        <map_components component_1="PI3K" component_2="Akt"/>
+        <map_variables variable_1="PI3Kstar" variable_2="PI3Kstar"/>
+    </connection>
+</model>

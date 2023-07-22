@@ -1,0 +1,296 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="ERK_Hatakeyama" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:cmeta="http://www.cellml.org/metadata/1.0#">
+    <units name="s">
+        <unit units="second"/>
+    </units>
+    <units name="nm">
+        <unit prefix="nano" units="mole"/>
+        <unit exponent="-1" units="litre"/>
+    </units>
+    <units name="flux">
+        <unit units="nm"/>
+        <unit exponent="-1" units="s"/>
+    </units>
+    <units name="second_order_rate_constant">
+        <unit exponent="-1" units="nm"/>
+        <unit exponent="-1" units="s"/>
+    </units>
+    <units name="first_order_rate_constant">
+        <unit exponent="-1" units="s"/>
+    </units>
+    <component name="ERK">
+        <variable name="time" public_interface="in" units="s"/>
+        <variable name="MEKPP" public_interface="in" units="nm"/>
+        <variable cmeta:id="ERK_MKP3" initial_value="2.4" name="MKP3" units="nm"/>
+        <variable cmeta:id="ERK_ERK" initial_value="1000" name="ERK" units="nm"/>
+        <variable cmeta:id="ERK_ERKP" initial_value="0" name="ERKP" units="nm"/>
+        <variable cmeta:id="ERK_ERKPP" initial_value="0" name="ERKPP" units="nm"/>
+        <variable initial_value="9.5" name="kf19" units="first_order_rate_constant"/>
+        <variable initial_value="146000" name="k19" units="nm"/>
+        <variable initial_value="0.3" name="kf20" units="first_order_rate_constant"/>
+        <variable initial_value="160" name="k20" units="nm"/>
+        <variable initial_value="16" name="kf21" units="first_order_rate_constant"/>
+        <variable initial_value="146000" name="k21" units="nm"/>
+        <variable initial_value="0.27" name="kf22" units="first_order_rate_constant"/>
+        <variable initial_value="60" name="k22" units="nm"/>
+        <variable initial_value="1" name="one" units="dimensionless"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>ERK</ci>
+                </apply>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <apply>
+                                <minus/>
+                                <ci>kf19</ci>
+                            </apply>
+                            <ci>MEKPP</ci>
+                            <ci>ERK</ci>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <times/>
+                                <ci>k19</ci>
+                                <apply>
+                                    <plus/>
+                                    <ci>one</ci>
+                                    <apply>
+                                        <divide/>
+                                        <ci>ERKP</ci>
+                                        <ci>k21</ci>
+                                    </apply>
+                                </apply>
+                            </apply>
+                            <ci>ERK</ci>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>kf20</ci>
+                            <ci>MKP3</ci>
+                            <ci>ERKP</ci>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <times/>
+                                <ci>k20</ci>
+                                <apply>
+                                    <plus/>
+                                    <ci>one</ci>
+                                    <apply>
+                                        <divide/>
+                                        <ci>ERKPP</ci>
+                                        <ci>k22</ci>
+                                    </apply>
+                                </apply>
+                            </apply>
+                            <ci>ERKP</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>ERKPP</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>kf21</ci>
+                            <ci>MEKPP</ci>
+                            <ci>ERKP</ci>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <times/>
+                                <ci>k21</ci>
+                                <apply>
+                                    <plus/>
+                                    <ci>one</ci>
+                                    <apply>
+                                        <divide/>
+                                        <ci>ERK</ci>
+                                        <ci>k19</ci>
+                                    </apply>
+                                </apply>
+                            </apply>
+                            <ci>ERKP</ci>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>kf22</ci>
+                            <ci>MKP3</ci>
+                            <ci>ERKPP</ci>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <times/>
+                                <ci>k22</ci>
+                                <apply>
+                                    <plus/>
+                                    <ci>one</ci>
+                                    <apply>
+                                        <divide/>
+                                        <ci>ERKP</ci>
+                                        <ci>k20</ci>
+                                    </apply>
+                                </apply>
+                            </apply>
+                            <ci>ERKPP</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>ERKP</ci>
+                </apply>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <times/>
+                                    <ci>kf19</ci>
+                                    <ci>MEKPP</ci>
+                                    <ci>ERK</ci>
+                                </apply>
+                                <apply>
+                                    <plus/>
+                                    <apply>
+                                        <times/>
+                                        <ci>k19</ci>
+                                        <apply>
+                                            <plus/>
+                                            <ci>one</ci>
+                                            <apply>
+                                                <divide/>
+                                                <ci>ERKP</ci>
+                                                <ci>k21</ci>
+                                            </apply>
+                                        </apply>
+                                    </apply>
+                                    <ci>ERK</ci>
+                                </apply>
+                            </apply>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <times/>
+                                    <ci>kf20</ci>
+                                    <ci>MKP3</ci>
+                                    <ci>ERKP</ci>
+                                </apply>
+                                <apply>
+                                    <plus/>
+                                    <apply>
+                                        <times/>
+                                        <ci>k20</ci>
+                                        <apply>
+                                            <plus/>
+                                            <ci>one</ci>
+                                            <apply>
+                                                <divide/>
+                                                <ci>ERKPP</ci>
+                                                <ci>k22</ci>
+                                            </apply>
+                                        </apply>
+                                    </apply>
+                                    <ci>ERKP</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <ci>kf21</ci>
+                                <ci>MEKPP</ci>
+                                <ci>ERKP</ci>
+                            </apply>
+                            <apply>
+                                <plus/>
+                                <apply>
+                                    <times/>
+                                    <ci>k21</ci>
+                                    <apply>
+                                        <plus/>
+                                        <ci>one</ci>
+                                        <apply>
+                                            <divide/>
+                                            <ci>ERK</ci>
+                                            <ci>k19</ci>
+                                        </apply>
+                                    </apply>
+                                </apply>
+                                <ci>ERKP</ci>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>kf22</ci>
+                            <ci>MKP3</ci>
+                            <ci>ERKPP</ci>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <times/>
+                                <ci>k22</ci>
+                                <apply>
+                                    <plus/>
+                                    <ci>one</ci>
+                                    <apply>
+                                        <divide/>
+                                        <ci>ERKP</ci>
+                                        <ci>k20</ci>
+                                    </apply>
+                                </apply>
+                            </apply>
+                            <ci>ERKPP</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+</model>

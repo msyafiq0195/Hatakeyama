@@ -1,0 +1,340 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="MEK_Hatakeyama" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:cmeta="http://www.cellml.org/metadata/1.0#">
+    <units name="s">
+        <unit units="second"/>
+    </units>
+    <units name="nm">
+        <unit prefix="nano" units="mole"/>
+        <unit exponent="-1" units="litre"/>
+    </units>
+    <units name="flux">
+        <unit units="nm"/>
+        <unit exponent="-1" units="s"/>
+    </units>
+    <units name="second_order_rate_constant">
+        <unit exponent="-1" units="nm"/>
+        <unit exponent="-1" units="s"/>
+    </units>
+    <units name="first_order_rate_constant">
+        <unit exponent="-1" units="s"/>
+    </units>
+    <component name="MEK">
+        <variable name="time" public_interface="in" units="s"/>
+        <variable name="RAF_star" public_interface="in" units="nm"/>
+        <variable cmeta:id="MEK_MEKPP" initial_value="0" name="MEKPP" public_interface="out" units="nm"/>
+        <variable cmeta:id="MEK_PP2A" initial_value="11.4" name="PP2A" units="nm"/>
+        <variable cmeta:id="MEK_MEKP" initial_value="0" name="MEKP" public_interface="out" units="nm"/>
+        <variable cmeta:id="MEK_MEK" initial_value="120" name="MEK" units="nm"/>
+        <variable name="Akt_PIP" public_interface="in" units="nm"/>
+        <variable name="Akt_PIPP" public_interface="in" units="nm"/>
+        <variable initial_value="3.5" name="kf15" units="first_order_rate_constant"/>
+        <variable initial_value="317" name="k15" units="nm"/>
+        <variable initial_value="0.058" name="kf16" units="first_order_rate_constant"/>
+        <variable initial_value="2200" name="k16" units="nm"/>
+        <variable initial_value="2.9" name="kf17" units="first_order_rate_constant"/>
+        <variable initial_value="317" name="k17" units="nm"/>
+        <variable initial_value="0.058" name="kf18" units="first_order_rate_constant"/>
+        <variable initial_value="60" name="k18" units="nm"/>
+        <variable initial_value="4.35" name="k31" units="nm"/>
+        <variable initial_value="12" name="k33" units="nm"/>
+        <variable initial_value="1" name="one" units="dimensionless"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>MEK</ci>
+                </apply>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <apply>
+                                <minus/>
+                                <ci>kf15</ci>
+                            </apply>
+                            <ci>RAF_star</ci>
+                            <ci>MEK</ci>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <times/>
+                                <ci>k15</ci>
+                                <apply>
+                                    <plus/>
+                                    <ci>one</ci>
+                                    <apply>
+                                        <divide/>
+                                        <ci>MEKP</ci>
+                                        <ci>k17</ci>
+                                    </apply>
+                                </apply>
+                            </apply>
+                            <ci>MEK</ci>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>kf16</ci>
+                            <ci>PP2A</ci>
+                            <ci>MEKP</ci>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <times/>
+                                <ci>k16</ci>
+                                <apply>
+                                    <plus/>
+                                    <ci>one</ci>
+                                    <apply>
+                                        <divide/>
+                                        <ci>MEKPP</ci>
+                                        <ci>k18</ci>
+                                    </apply>
+                                    <apply>
+                                        <divide/>
+                                        <ci>Akt_PIP</ci>
+                                        <ci>k31</ci>
+                                    </apply>
+                                    <apply>
+                                        <divide/>
+                                        <ci>Akt_PIPP</ci>
+                                        <ci>k33</ci>
+                                    </apply>
+                                </apply>
+                            </apply>
+                            <ci>MEKP</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>MEKP</ci>
+                </apply>
+                <apply>
+                    <plus/>
+                    <apply>
+                        <minus/>
+                        <apply>
+                            <minus/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <times/>
+                                    <ci>kf15</ci>
+                                    <ci>RAF_star</ci>
+                                    <ci>MEK</ci>
+                                </apply>
+                                <apply>
+                                    <plus/>
+                                    <apply>
+                                        <times/>
+                                        <ci>k15</ci>
+                                        <apply>
+                                            <plus/>
+                                            <ci>one</ci>
+                                            <apply>
+                                                <divide/>
+                                                <ci>MEKP</ci>
+                                                <ci>k17</ci>
+                                            </apply>
+                                        </apply>
+                                    </apply>
+                                    <ci>MEK</ci>
+                                </apply>
+                            </apply>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <times/>
+                                    <ci>kf16</ci>
+                                    <ci>PP2A</ci>
+                                    <ci>MEKP</ci>
+                                </apply>
+                                <apply>
+                                    <plus/>
+                                    <apply>
+                                        <times/>
+                                        <ci>k16</ci>
+                                        <apply>
+                                            <plus/>
+                                            <ci>one</ci>
+                                            <apply>
+                                                <divide/>
+                                                <ci>MEKPP</ci>
+                                                <ci>k18</ci>
+                                            </apply>
+                                            <apply>
+                                                <divide/>
+                                                <ci>Akt_PIP</ci>
+                                                <ci>k31</ci>
+                                            </apply>
+                                            <apply>
+                                                <divide/>
+                                                <ci>Akt_PIPP</ci>
+                                                <ci>k33</ci>
+                                            </apply>
+                                        </apply>
+                                    </apply>
+                                    <ci>MEKP</ci>
+                                </apply>
+                            </apply>
+                        </apply>
+                        <apply>
+                            <divide/>
+                            <apply>
+                                <times/>
+                                <ci>kf17</ci>
+                                <ci>RAF_star</ci>
+                                <ci>MEKP</ci>
+                            </apply>
+                            <apply>
+                                <plus/>
+                                <apply>
+                                    <times/>
+                                    <ci>k17</ci>
+                                    <apply>
+                                        <plus/>
+                                        <ci>one</ci>
+                                        <apply>
+                                            <divide/>
+                                            <ci>MEK</ci>
+                                            <ci>k15</ci>
+                                        </apply>
+                                    </apply>
+                                </apply>
+                                <ci>MEKP</ci>
+                            </apply>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>kf18</ci>
+                            <ci>PP2A</ci>
+                            <ci>MEKPP</ci>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <times/>
+                                <ci>k18</ci>
+                                <apply>
+                                    <plus/>
+                                    <ci>one</ci>
+                                    <apply>
+                                        <divide/>
+                                        <ci>MEKP</ci>
+                                        <ci>k16</ci>
+                                    </apply>
+                                    <apply>
+                                        <divide/>
+                                        <ci>Akt_PIP</ci>
+                                        <ci>k31</ci>
+                                    </apply>
+                                    <apply>
+                                        <divide/>
+                                        <ci>Akt_PIPP</ci>
+                                        <ci>k33</ci>
+                                    </apply>
+                                </apply>
+                            </apply>
+                            <ci>MEKPP</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>time</ci>
+                    </bvar>
+                    <ci>MEKPP</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>kf17</ci>
+                            <ci>RAF_star</ci>
+                            <ci>MEKP</ci>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <times/>
+                                <ci>k17</ci>
+                                <apply>
+                                    <plus/>
+                                    <ci>one</ci>
+                                    <apply>
+                                        <divide/>
+                                        <ci>MEK</ci>
+                                        <ci>k15</ci>
+                                    </apply>
+                                </apply>
+                            </apply>
+                            <ci>MEKP</ci>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <divide/>
+                        <apply>
+                            <times/>
+                            <ci>kf18</ci>
+                            <ci>PP2A</ci>
+                            <ci>MEKPP</ci>
+                        </apply>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <times/>
+                                <ci>k18</ci>
+                                <apply>
+                                    <plus/>
+                                    <ci>one</ci>
+                                    <apply>
+                                        <divide/>
+                                        <ci>MEKP</ci>
+                                        <ci>k16</ci>
+                                    </apply>
+                                    <apply>
+                                        <divide/>
+                                        <ci>Akt_PIP</ci>
+                                        <ci>k31</ci>
+                                    </apply>
+                                    <apply>
+                                        <divide/>
+                                        <ci>Akt_PIPP</ci>
+                                        <ci>k33</ci>
+                                    </apply>
+                                </apply>
+                            </apply>
+                            <ci>MEKPP</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+</model>
